@@ -17,7 +17,7 @@ public class PetFormatter implements Formatter<Pet> {
 	public PetFormatter(PetService petService) {
 		this.petService = petService;
 	}
-	
+
 	@Override
 	public String print(Pet pet, Locale locale) {
 		return pet.getName();
@@ -26,11 +26,10 @@ public class PetFormatter implements Formatter<Pet> {
 	@Override
 	public Pet parse(String text, Locale locale) throws ParseException {
 		Pet pet = petService.getPetByName(text);
-    	if(pet != null) {
-    		return pet;
-    	}else {
-    		throw new ParseException("Pet not found: " + text, 0);
-    	}
+		if (pet != null) {
+			return pet;
+		} else {
+			throw new ParseException("Pet not found: " + text, 0);
+		}
 	}
-
 }
