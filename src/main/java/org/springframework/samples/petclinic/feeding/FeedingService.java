@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FeedingService {
@@ -26,8 +27,11 @@ public class FeedingService {
         return feedingRepository.findFeedingType(typeName);
     }
 
+    @Transactional(rollbackFor = UnfeasibleFeedingException.class)
     public Feeding save(Feeding p) throws UnfeasibleFeedingException {
-        return feedingRepository.save(p);
+        if (p.getPet().getId() != p.getFeedingType().getPetType().getId()) {
+            throw new UnfeasibleFeedingException();
+        } else
+            return feedingRepository.save(p);
     }
-
 }
