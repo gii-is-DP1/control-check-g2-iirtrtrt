@@ -27,18 +27,19 @@ public class FeedingController {
         return createOrUpdateFeedingForm;
     }
 
-    // @PostMapping(value = "/feeding/create")
-    // public String postFeedingCreate(@Valid Feeding feeding, BindingResult result,
-    // ModelMap model) {
-    // if (result.hasErrors()) {
-    // model.put("feeding", feeding);
-    // return createOrUpdateFeedingForm;
-    // } else {
-    // try {
-    // feedingService.save(feeding);
-    // } catch (Exception ex) {
-    // }
-    // return "welcome";
-    // }
-    // }
+    @PostMapping(value = "/feeding/create")
+    public String postFeedingCreate(@Valid Feeding feeding, BindingResult result,
+            ModelMap model) {
+        if (result.hasErrors()) {
+            model.put("feeding", feeding);
+            return createOrUpdateFeedingForm;
+        } else {
+            try {
+                feedingService.save(feeding);
+            } catch (Exception ex) {
+                return createOrUpdateFeedingForm;
+            }
+            return "redirect:/welcome";
+        }
+    }
 }
